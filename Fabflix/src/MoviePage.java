@@ -15,8 +15,6 @@ public class MoviePage extends javax.servlet.http.HttpServlet
     return "Servlet connects to MySQL database and displays result of a SELECT";
   }
   
-
-
   public void doGet(javax.servlet.http.HttpServletRequest request, HttpServletResponse response)
     throws java.io.IOException, javax.servlet.ServletException
   {
@@ -26,22 +24,13 @@ public class MoviePage extends javax.servlet.http.HttpServlet
     
     response.setContentType("text/html");
     
-
     PrintWriter out = response.getWriter();
     
     out.println("<HTML><HEAD><TITLE>Fabflix: Found Results</TITLE>");
-    out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"mystyle.css\"><link href=\"css/bootstrap.min.css\" rel=\"stylesheet\"></HEAD>");
-    
-
+    out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"mystyle.css\"><link href=\"css/bootstrap.min.css\" rel=\"stylesheet\"></HEAD>");  
     out.println("<BODY style=\"background-color: lightgrey;\"><h2 style=\"display: inline-block;z-index: 1;padding:1em;\"><a href=\"mainPage\">Fabflix</a></h2><h2 id=\"cart\" style=\"float:right;display: inline-block;z-index: 1;padding:1em;\"><a href=\"ShoppingCart\">My Cart</a></h2>");
-    
-
     out.println("<h3 style=\"text-align:center;\">Movie Page</h3>");
     
-
-
-
-
     try
     {
       Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -54,29 +43,14 @@ public class MoviePage extends javax.servlet.http.HttpServlet
       
       String id = request.getParameter("id");
       
-
       String query = "SELECT DISTINCT id, year, director, banner_url, title, trailer_url from movies WHERE id = " + id;
       
-
       ResultSet rs = statement.executeQuery(query);
       
-
       out.println("<TABLE border align=\"center\">");
       
-
-
-
       out.println("<tr><td>Image</td><td>ID</td><td>Title</td><td>Year</td><td>Director</td><td>Stars</td><td>Genres</td><td>Trailer</td></tr>");
       
-
-
-
-
-
-
-
-
-
       while (rs.next())
       {
         String m_IG = rs.getString("banner_url");
@@ -121,8 +95,7 @@ public class MoviePage extends javax.servlet.http.HttpServlet
       }
       
       out.println("</TABLE>");
-      
-
+   
       out.println("<a href=\"ShoppingCart?id=" + id + "&quantity=1\">" + "Add to Cart</a>");
       
       rs.close();
@@ -133,17 +106,11 @@ public class MoviePage extends javax.servlet.http.HttpServlet
       while (ex != null) {
         System.out.println("SQL Exception:  " + ex.getMessage());
         ex = ex.getNextException();
-
-
       }
-      
-
 
     }
     catch (Exception ex)
     {
-
-
       return;
     }
     out.close();
