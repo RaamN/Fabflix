@@ -15,10 +15,8 @@ public class ShoppingCart extends javax.servlet.http.HttpServlet
   {
     javax.servlet.http.HttpSession session = request.getSession();
     
-
     LinkedHashMap<String, Integer> Cart = (LinkedHashMap)session.getAttribute("Cart");
     
-
     if (Cart == null) {
       Cart = new LinkedHashMap();
       session.setAttribute("Cart", Cart);
@@ -33,15 +31,12 @@ public class ShoppingCart extends javax.servlet.http.HttpServlet
     if (quantity != null) {
       number = Integer.valueOf(Integer.parseInt(quantity));
     }
-    
-
 
     String loginUser = "mytestuser";
     String loginPasswd = "mypassword";
     String loginUrl = "jdbc:mysql://localhost:3306/moviedb?autoReconnect=true&useSSL=false";
     
-    response.setContentType("text/html");
-    
+    response.setContentType("text/html"); 
 
     PrintWriter out = response.getWriter();
     
@@ -56,10 +51,8 @@ public class ShoppingCart extends javax.servlet.http.HttpServlet
       "<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\"></HEAD>");
     out.println("<BODY style=\"background-color: lightgrey;\"><h2 style=\"display: inline-block;z-index: 1;padding:1em;\"><a href=\"mainPage\">Fabflix</a></h2><h2 id=\"cart\" style=\"float:right;display: inline-block;z-index: 1;padding:1em;\"><a href=\"ShoppingCart\">My Cart</a></h2>");
     
-
     out.println("<h2 align=\"center\">Shopping Cart</h2>");
     
-
     int total_movies = 0;
     synchronized (Cart)
     {
@@ -99,7 +92,6 @@ public class ShoppingCart extends javax.servlet.http.HttpServlet
         Cart.remove(id);
       }
       
-
       if (Cart.size() == 0)
       {
         out.println("<I>No items</I>");
@@ -109,24 +101,14 @@ public class ShoppingCart extends javax.servlet.http.HttpServlet
       {
         out.println("<table border align=\"center\">");
         out.println("<tr><td>Movie</td><td>Price</td><td>Quantity</td></tr>");
-        
-
-
 
         try
         {
           Class.forName("com.mysql.jdbc.Driver").newInstance();
           java.sql.Connection dbcon = java.sql.DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
           java.sql.Statement statement = dbcon.createStatement();
-          
-
-
-
           java.util.Set set = Cart.entrySet();
-          
-
-          java.util.Iterator i = set.iterator();
-          
+          java.util.Iterator i = set.iterator();       
           while (i.hasNext())
           {
             Map.Entry<String, Integer> me = (Map.Entry)i.next();
@@ -153,11 +135,9 @@ public class ShoppingCart extends javax.servlet.http.HttpServlet
                   "</td>" + 
                   
                   "</tr>");
-              }
-              
+              }              
               total_movies += ((Integer)me.getValue()).intValue();
-            }
-            
+            }          
           }
         }
         catch (SQLException ex)
@@ -167,17 +147,10 @@ public class ShoppingCart extends javax.servlet.http.HttpServlet
           while (ex != null) {
             System.out.println("SQL Exception:  " + ex.getMessage());
             ex = ex.getNextException();
-
-
           }
-          
-
-
         }
         catch (Exception ex)
         {
-
-
           return;
         }
         
@@ -185,7 +158,6 @@ public class ShoppingCart extends javax.servlet.http.HttpServlet
         
         out.println("<h4 align=\"center\">Total: $" + total_movies * 100 + ".00");
         
-
         out.println("<a href=\"checkout.jsp\"><button align=\"center\">Checkout</button></a>");
       }
     }
